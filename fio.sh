@@ -100,7 +100,7 @@ OPTIONS:
 EOF
 }
 
-while getopts hz:ycb:nr:xe:d:o:it:s:l:u:m:f OPTION
+while getopts hz:w:ycb:nr:xe:d:o:it:s:l:u:m:f OPTION
 do
      case $OPTION in
          h)
@@ -779,5 +779,5 @@ if [ $REMOVE == 1 ]  && [ $RAW == 0 ] ; then  # {
     echo "cmd=$cmd"
     eval $cmd
 fi # }
-./fioparse.sh  $OUTPUT/*out  > $OUTPUT/fio_summary.out 
-cat $OUTPUT/fio_summary.out
+#./fioparse.sh  $OUTPUT/*out  > $OUTPUT/fio_summary.out 
+#cat $OUTPUT/fio_summary.out

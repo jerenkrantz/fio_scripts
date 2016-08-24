@@ -185,7 +185,7 @@ sub print_hist {
 	       $label=""; 
 	        if ($curbucket eq "4" ) {
 	          if ( $labels == 1 ) { $label="us50=";		 }
-                  printf(",%s%2d",$label, int(${$hist_type}{$curbucket}
+                  printf("%s%2d",$label, int(${$hist_type}{$curbucket}
 	                                                   + ${$hist_type}{"10"}
 	                                                   + ${$hist_type}{"20"}
 	                                                   + ${$hist_type}{"50"})||0  );
