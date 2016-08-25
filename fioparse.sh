@@ -23,7 +23,7 @@ EOF
 # the perl looks at each commandline arge and sets a 
 # variable with that name = 1
 #
-AGRUMENTS=""
+ARGUMENTS=""
 VERBOSE=0
 DTRACE=0
 RPLOTS=0
