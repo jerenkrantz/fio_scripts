@@ -471,7 +471,7 @@ initialize()
     BEG=`date +%s`
     while [[ $loops -le $TENMEGABYTES ]] ; do  # {
        let seek=$loops*10
-       cmd="$DD if=/tmp/fio.$$ of=${outfile} bs=1024k seek=$seek count=10 > /tmp/fio.dd.out 2>&1"
+       cmd="$DD if=/tmp/fio.$$ of=${outfile} bs=1024k seek=$seek count=10 > /tmp/fio.dd.$$.out 2>&1"
      # was the command for file
      # cmd="$DD if=/tmp/fio.$$ of=${outfile} bs=1024k oflag=append conv=notrunc count=1 > /tmp/fio.dd.out 2>&1"
        eval $cmd
@@ -491,11 +491,11 @@ initialize()
           fi  # }
        else
           echo "RET:$RET:"
-          cat /tmp/fio.dd.out
+          cat /tmp/fio.dd.$$.out
        fi # }
        loops=$(expr $loops + 1)
     done   #  }
-    rm /tmp/fio.dd.out
+    rm /tmp/fio.dd.$$.out
 }
 
 # example variable values for INITIALIZE
