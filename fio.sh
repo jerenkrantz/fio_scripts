@@ -703,7 +703,7 @@ for job in $jobs; do # {
          NUSERS=`echo $USERS | sed -e 's/^00*//'`
          while [[ $loops -le $NUSERS ]] ; do
             JOBNUMBER=$loops
-            eval $jobs
+            eval $job
             loops=$(expr $loops + 1)
          done
          cmd="$DTRACE1 $BINARY $JOBFILE $DTRACE2> ${PREFIX}.out"
