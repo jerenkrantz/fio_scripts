@@ -754,7 +754,7 @@ for job in $jobs; do # {
   # workload test: 8k read write by 1,8,16,32 users
   elif [ $job ==  "randrw" ] ; then
     for USERS in `eval echo $MULTIUSERS` ; do 
-      echo "j: $USERS"
+      #echo "j: $USERS"
       PREFIX="$OUTPUT/${job}_u${USERS}"
       JOBFILE=${PREFIX}.job
       init
