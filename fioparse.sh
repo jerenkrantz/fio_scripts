@@ -314,6 +314,12 @@ sub print_hist {
              $type =~ s/[ 	]*//;
              $iops =~ s/.*iops=//;
              $iops =~ s/ .*//;
+             $factor = 1;
+             if ($iops =~ /.*K/) {
+                $factor = 1000;
+                $iops =~ s/K//;
+             }
+             $iops = $iops*$factor;
              #printf("   type:%s; iops:%s; line:%s;\n",$type,$iops,$line);
              $iops{$type}=$iops;
              next;
@@ -702,7 +708,7 @@ sub print_hist {
            printf("%s%7.1f,",  $label, $latstd{$type}/1000);
            #printf("%s,", $unit{$type});
 	   if ( $labels == 1 ) { $label="iops=";} 
-           printf("%s%5s",  $label, $iops{$type});
+           printf("%s%5s,",  $label, $iops{$type});
            $iop=100;
            $hist_type="lat";
            $bucket_list= "buckets_fio";

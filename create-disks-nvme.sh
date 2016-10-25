@@ -6,6 +6,7 @@ function make_partition
     parted -s "$1" mklabel gpt
     #parted -s "$1" unit s mkpart primary "$2" "$3"
     parted -s "$1" unit s mkpart primary 2048s 100%
+    sleep 1
 }
 
 for z in `seq 0 23`; do
@@ -22,7 +23,7 @@ for z in `seq 0 23`; do
       echo "Error creating partition on drive #${i} /dev/nvme${z}n1p1"
       exit
     fi
-    mkfs.xfs /dev/nvme${z}n1p1
+    mkfs.xfs -f /dev/nvme${z}n1p1
   fi
   if [ ! -d /srv/disk${i} ]; then
      mkdir /srv/disk${i}

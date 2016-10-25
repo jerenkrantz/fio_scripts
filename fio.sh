@@ -54,11 +54,12 @@ DTRACE1=""
 DTRACE2=""
 
 MULTIUSERS="01 08 16 32 64"
-READSIZES="0004 0008 0032 0128"
-SEQREADSIZES="0128 0256 1024 4096"
+READSIZES="0001 0032 0128"
+SEQREADSIZES="0004 0008 0064 0256 1024 4096"
 
 MULTIWRITEUSERS="01 04 16"
-WRITESIZES="0001 0004 0008 0064 0128 0256 1024"
+SINGLEWRITESIZES="0001 0032 0128"
+WRITESIZES="0004 0008 0064 0256 1024"
 
 usage()
 {
@@ -708,6 +709,17 @@ for job in $jobs; do # {
        done
   # redo test : 1k, 4k, 8k, 128k, 1024k by 1 user 
   elif [ $job ==  "write" ] ; then
+       for WRITESIZE in `eval echo $SINGLEWRITESIZES` ; do
+         USERS=01
+         PREFIX="$OUTPUT/${job}_u${USERS}_kb${WRITESIZE}"
+         JOBFILE=${PREFIX}.job
+         init
+         offsets
+         # eval $job
+         cmd="$DTRACE1 $BINARY $JOBFILE $DTRACE2> ${PREFIX}.out"
+         echo $cmd
+         [[ $EVAL -eq 1 ]] && eval $cmd
+       done
        for WRITESIZE in `eval echo $WRITESIZES` ; do 
          for USERS in `eval echo $MULTIWRITEUSERS` ; do 
            PREFIX="$OUTPUT/${job}_u${USERS}_kb${WRITESIZE}"
