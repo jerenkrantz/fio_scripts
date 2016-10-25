@@ -25,7 +25,10 @@ cat > $2/HEADER.html <<EOF
 <ul>
 <li><a href="randread_bs_8K.html">Random Read (blocksize 8K)</a></li>
 <li><a href="randrw_bs_8K.html">Random Read/Write (blocksize 8K; 80% read/20% write)</a></li>
-<li>Sequential Read: <a href="read_bs_256K.html">256K</a>
+<li>Sequential Read: <a href="read_bs_4K.html">4K</a>
+                     <a href="read_bs_8K.html">8K</a>
+                     <a href="read_bs_64K.html">64K</a>
+                     <a href="read_bs_256K.html">256K</a>
                      <a href="read_bs_1M.html">1M</a>
                      <a href="read_bs_4M.html">4M</a> blocksize</li>
 <li>Sequential Read: <a href="read_users_1.html">1</a>
@@ -36,7 +39,10 @@ cat > $2/HEADER.html <<EOF
 </ul>
 <h4>Writes: 1,4,16 users <i>per disk</i></h4>
 <ul>
-<li>Write: <a href="write_bs_8K.html">8K</a>
+<li>Write: <a href="write_bs_4K.html">4K</a>
+           <a href="write_bs_8K.html">8K</a>
+           <a href="write_bs_64K.html">64K</a>
+           <a href="write_bs_256K.html">256K</a>
            <a href="write_bs_1M.html">1M</a> blocksize</li>
 <li>Write: <a href="write_users_1.html">1</a>
            <a href="write_users_4.html">4</a>
@@ -44,7 +50,7 @@ cat > $2/HEADER.html <<EOF
 </ul>
 EOF
 
-for a in randread_bs_8K randrw_bs_8K read_users_1 read_users_8 read_users_16 read_users_32 read_users_64 write_users_1 write_users_4 write_users_16 read_bs_256K read_bs_1M read_bs_4M write_bs_8K write_bs_1M; do
+for a in randread_bs_8K randrw_bs_8K read_users_1 read_users_8 read_users_16 read_users_32 read_users_64 write_users_1 write_users_4 write_users_16 read_bs_4K read_bs_8K read_bs_64K read_bs_256K read_bs_1M read_bs_4M write_bs_4K write_bs_8K write_bs_64K write_bs_256K write_bs_1M; do
   echo "Generating index file for $a" 
   echo "<html><body>" > $2/$a.html
   for i in $2/hist_*_$a.png; do
