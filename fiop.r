@@ -99,15 +99,6 @@ graphit <- function(
          cat("no name\n");
          i_scalex = "users"
       }
-      if ( i_name == "randread" ) {
-         maxMBs = 100
-      }
-      if ( i_name == "read" ) {
-         maxMBs = 400
-      }
-      if ( i_name == "write" ) {
-         maxMBs = 100
-      }
   # 
   # if i_users > 0 then users is defined as a single value
   # ie, block sizes vary 
@@ -207,6 +198,7 @@ graphit <- function(
       maxlat<- as.numeric(t(rr['max']))
       std   <- as.numeric(t(rr['std']))
       MB    <- as.numeric(t(rr['MB']))
+      IOPS  <- as.numeric(t(rr['iops']))
       p95_00 <- as.numeric(t(rr['p95_00']))
       p99_00 <- as.numeric(t(rr['p99_00']))
       p99_50 <- as.numeric(t(rr['p99_50']))
@@ -324,12 +316,12 @@ graphit <- function(
      colnames(MBbars) = col_lables
   #            B  L  T  R
      par(mar=c(2, 4, 0, 4))
-     op <- barplot(MBbars,col=colors,ylab="MB/s",border=NA,space=1, ylim=c(0,log(1200)),xlim=c(1,2*length(lat)+1),
+     op <- barplot(MBbars,col=colors,ylab="MB/s",border=NA,space=1, ylim=c(0,log(4000)),xlim=c(1,2*length(lat)+1),
             yaxt  = "n" )
-     text(op, pmin((logMB),log(400)),round(MB),adj=c(0.2,-.2),col="gray20")
+     text(op, pmin((logMB),log(3000)),round(MB),adj=c(0.4,-.4),col="gray20")
 
-    ypts  <-  c(    log(2),       log(11),    log(101),  log(1001));
-    ylbs  <-  c(  "1",  "10", "100",  "1000");
+    ypts  <-  c(    log(2),       log(11),    log(101),  log(1001), log (4000));
+    ylbs  <-  c(  "1",  "10", "100",  "1000", "4000");
     axis(2,at=ypts, labels=ylbs)
 
 #    j=2
@@ -361,7 +353,7 @@ graphit <- function(
   #      SCALING BARS in middle graph
   #
   #            B  L  T  R
-     par(mar=c(1, 4, 0, 4))
+     par(mar=c(2, 4, 0, 4))
      if ( i_plots == 3 ) {
 #     BAR PLOT instead of segments, problems with scale
 #      if ( 1 == 0 ) {     
@@ -389,7 +381,7 @@ graphit <- function(
             bty   = "l", 
             xlim  = c(xminwidth,xmaxwidth), 
             ylim  = c(ymin,ymax*1.1), 
-            ylab  = "" , 
+            ylab  = "Latency" ,
             xlab  = "",
             log   = "", 
            #yaxt  = "n" , 
