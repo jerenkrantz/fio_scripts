@@ -47,7 +47,7 @@ graphit <- function(
                     i_plot_99   = 1 ,
                     i_plot_9999 = 0 ,
                     i_scalelat  = "avg" ,
-                    i_plots = 3
+                    i_plots = 4
                     ) {
 
   # 
@@ -299,29 +299,36 @@ graphit <- function(
      if ( i_plots == 3 )  {
          nf <- layout(matrix(c(3:1)), widths = 13, heights = c(7, 3, 3), respect = TRUE)
      }
+     if ( i_plots == 4 )  {
+         nf <- layout(matrix(c(4:1)), widths = 13, heights = c(7, 3, 3, 3), respect = TRUE)
+     }
   #
   # set margins (bottom, left, top, right)
   #   get rid of top, so the bottome graph is flush with one above
   #            B  L  T  R
-     par(mar=c(2, 4, 0, 4))
+     par(mar=c(2, 4, 1, 4))
 
   #
   # GRAPH  NEW  1
   #
   #     MB/s BARS in bottom graph
   #
-     logMB <- log(MB+1)
-  #  MBbars <- t(t(fhist)*MB)
-     MBbars <- t(t(fhist)*logMB)
+     #logMB <- log(MB+1)
+     #MBbars <- t(t(fhist)*logMB)
+     MBbars <- t(t(fhist)*MB)
      colnames(MBbars) = col_lables
   #            B  L  T  R
-     par(mar=c(2, 4, 0, 4))
-     op <- barplot(MBbars,col=colors,ylab="MB/s",border=NA,space=1, ylim=c(0,log(4000)),xlim=c(1,2*length(lat)+1),
-            yaxt  = "n" )
-     text(op, pmin((logMB),log(3000)),round(MB),adj=c(0.4,-.4),col="gray20")
+     par(mar=c(2, 4, 1, 4))
 
-    ypts  <-  c(    log(2),       log(11),    log(101),  log(1001), log (4000));
-    ylbs  <-  c(  "1",  "10", "100",  "1000", "4000");
+     max_ylim_base <- max((MB),2000)
+     max_ylim <- max_ylim_base * 1.2
+     max_ylim_text <- max_ylim_base
+     op <- barplot(MBbars,col=colors,ylab="MB/s",border=NA,space=1, ylim=c(0,max_ylim),xlim=c(1,2*length(lat)+1),
+            yaxt  = "n" )
+     text(op, pmin((MB),max_ylim_text),round(MB),adj=c(0.5,-.5),col="gray20")
+
+    ypts  <-  c(1,10,100,1000,2000,4000);
+    ylbs  <-  c("1",  "10M", "100M",  "1G", "2G", "4G");
     axis(2,at=ypts, labels=ylbs)
 
 #    j=2
@@ -347,6 +354,22 @@ graphit <- function(
 #    plot(cols, scaling, type = "l", xaxs = "i", lty = 1, col = "gray30", lwd = 1, bty = "l", 
 #         xlim=c(1,2*length(lat)+1),  ylim = c(-1,1), ylab = "" , xlab="",log = mylog, yaxt = "n" , xaxt ="n")
 
+     if ( i_plots == 4 ) {
+    #            B  L  T  R
+       par(mar=c(3, 4, 0, 4))
+       IOPSbars <- t(t(fhist)*IOPS)
+       colnames(IOPSbars) = col_lables
+       max_ylim_base <- max((IOPS),20000)
+       max_ylim <- max_ylim_base * 1.2
+       max_ylim_text <- max_ylim_base
+       op <- barplot(IOPSbars,col=colors,ylab="IOPS/s",border=NA,space=1, ylim=c(0,max_ylim),
+                     xlim=c(1,2*length(lat)+1), yaxt  = "n" )
+       text(op, pmin(IOPS,max_ylim_text),round(IOPS),adj=c(0.5,-.5),col="gray20")
+
+       ypts  <-  c(1, 10000, 20000, 100000, 250000, 500000, 1000000);
+       ylbs  <-  c("1", "10K", "20K", "100K", "250K", "500K", "1M");
+       axis(2,at=ypts, labels=ylbs)
+    }
   #
   # GRAPH  NEW   2
   #
@@ -354,7 +377,7 @@ graphit <- function(
   #
   #            B  L  T  R
      par(mar=c(2, 4, 0, 4))
-     if ( i_plots == 3 ) {
+     if ( i_plots >= 3 ) {
 #     BAR PLOT instead of segments, problems with scale
 #      if ( 1 == 0 ) {     
 #       print(scaling)
