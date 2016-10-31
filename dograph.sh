@@ -54,7 +54,7 @@ for a in randread_bs_8K randrw_bs_8K read_users_1 read_users_8 read_users_16 rea
   echo "Generating index file for $a" 
   echo "<html><body>" > $2/$a.html
   for i in $2/hist_*_$a.png; do
-    echo "<img src='`basename $i`' />" >> $2/$a.html
+    echo "<img width='450px' height='450px' src='`basename $i`' />" >> $2/$a.html
   done
   echo "</body></html>" >> $2/$a.html
 done
